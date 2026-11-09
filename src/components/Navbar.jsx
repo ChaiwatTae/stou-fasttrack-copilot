@@ -106,18 +106,18 @@ export default function Navbar({
           {/* Main View Tabs */}
           <div style={{ display: 'flex', gap: '0.35rem' }}>
             <button
+              onClick={() => setActiveTab('units')}
+              className={`btn ${activeTab === 'units' ? 'btn-primary' : 'btn-outline'}`}
+              style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem', fontWeight: 700 }}
+            >
+              📖 อ่านตำรา มสธ. (ฉบับเต็ม)
+            </button>
+            <button
               onClick={() => setActiveTab('dashboard')}
               className={`btn ${activeTab === 'dashboard' ? 'btn-primary' : 'btn-outline'}`}
               style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem' }}
             >
               ภาพรวม 15 หน่วย
-            </button>
-            <button
-              onClick={() => setActiveTab('units')}
-              className={`btn ${activeTab === 'units' ? 'btn-primary' : 'btn-outline'}`}
-              style={{ padding: '0.45rem 0.85rem', fontSize: '0.8rem' }}
-            >
-              สรุป 80/20
             </button>
             <button
               onClick={() => setActiveTab('quiz')}

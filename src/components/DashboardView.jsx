@@ -262,6 +262,51 @@ export default function DashboardView({
 
       </div>
 
+      {/* Direct CTA to Textbook Reader */}
+      <div style={{
+        background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%)',
+        border: '1px solid rgba(96, 165, 250, 0.35)',
+        borderRadius: '16px',
+        padding: '1.25rem 1.5rem',
+        marginBottom: '2rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '1rem'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+          <div style={{
+            width: '42px',
+            height: '42px',
+            borderRadius: '10px',
+            background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#ffffff'
+          }}>
+            <BookOpen size={22} />
+          </div>
+          <div>
+            <div style={{ fontSize: '1rem', fontWeight: 800, color: '#f8fafc' }}>
+              ต้องการอ่านเนื้อหาตำราเรียน มสธ. เล่มจริงทันที?
+            </div>
+            <div style={{ fontSize: '0.825rem', color: '#cbd5e1', marginTop: '0.15rem' }}>
+              มีทั้งโหมดบทเรียนสรุปเข้ม และคลังหน้าหนังสือต้นฉบับให้เปิดดูหน้าต่อหน้า (ครบทั้ง 15 หน่วย)
+            </div>
+          </div>
+        </div>
+
+        <button
+          onClick={() => onSelectUnit(1)}
+          className="btn btn-primary"
+          style={{ padding: '0.65rem 1.25rem', fontWeight: 700, fontSize: '0.875rem' }}
+        >
+          📖 เริ่มอ่านหน่วยที่ 1 ทันที →
+        </button>
+      </div>
+
       {/* 15 Units Grid Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem', flexWrap: 'wrap', gap: '0.75rem' }}>
         <div>
@@ -391,8 +436,8 @@ export default function DashboardView({
                 justifyContent: 'space-between',
                 fontSize: '0.775rem'
               }}>
-                <span style={{ color: 'var(--accent-blue)', display: 'flex', alignItems: 'center', gap: '0.25rem', fontWeight: 600 }}>
-                  เปิดอ่านสรุปย่อ <ChevronRight size={14} />
+                <span style={{ color: '#60a5fa', display: 'flex', alignItems: 'center', gap: '0.35rem', fontWeight: 700 }}>
+                  <BookOpen size={14} /> เปิดอ่านตำรา มสธ. (ฉบับเต็ม) <ChevronRight size={14} />
                 </span>
                 <span style={{ color: 'var(--text-muted)' }}>
                   {unit.keyTerms.slice(0, 2).join(', ')}

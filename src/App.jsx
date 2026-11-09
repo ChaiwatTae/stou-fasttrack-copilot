@@ -9,7 +9,8 @@ import { COURSES } from './data/courses';
 
 export default function App() {
   const [currentCourseId, setCurrentCourseId] = useState('10141');
-  const [activeTab, setActiveTab] = useState('dashboard');
+  // Default to 'units' reader so the textbook content is immediately visible
+  const [activeTab, setActiveTab] = useState('units');
   const [currentUnitId, setCurrentUnitId] = useState(1);
   const [quizTargetUnitId, setQuizTargetUnitId] = useState(null);
   const [isCommercialModalOpen, setIsCommercialModalOpen] = useState(false);
