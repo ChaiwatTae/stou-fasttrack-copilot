@@ -42,6 +42,31 @@ export default function App() {
     }
   }, [completedUnitsMap]);
 
+  // Deep-linking and Browser Back/Forward via URL Hash (#units, #dashboard, #quiz, #planner)
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '').split('?')[0];
+      if (['units', 'dashboard', 'quiz', 'planner'].includes(hash)) {
+        setActiveTab(hash);
+      }
+    };
+
+    const initialHash = window.location.hash.replace('#', '').split('?')[0];
+    if (['units', 'dashboard', 'quiz', 'planner'].includes(initialHash)) {
+      setActiveTab(initialHash);
+    }
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    if (window.location.hash !== `#${tab}`) {
+      window.history.pushState(null, '', `#${tab}`);
+    }
+  };
+
   const currentCourse = COURSES[currentCourseId] || COURSES['10141'];
   const courseCompletedUnits = completedUnitsMap[currentCourseId] || [];
 
@@ -57,13 +82,13 @@ export default function App() {
 
   const handleSelectUnit = (unitId) => {
     setCurrentUnitId(unitId);
-    setActiveTab('units');
+    handleTabChange('units');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleStartQuiz = (unitId = null) => {
     setQuizTargetUnitId(unitId);
-    setActiveTab('quiz');
+    handleTabChange('quiz');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -78,7 +103,7 @@ export default function App() {
           setCurrentUnitId(1);
         }}
         activeTab={activeTab}
-        setActiveTab={setActiveTab}
+        setActiveTab={handleTabChange}
         studyStreak={studyStreak}
         onOpenCommercialModal={() => setIsCommercialModalOpen(true)}
       />

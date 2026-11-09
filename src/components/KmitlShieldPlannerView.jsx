@@ -13,15 +13,39 @@ import {
 
 export default function KmitlShieldPlannerView() {
   const [isKmitlExamWeek, setIsKmitlExamWeek] = useState(false);
-  const [commuteMinutes, setCommuteMinutes] = useState(35);
-  const [completedDailySlots, setCompletedDailySlots] = useState({
-    morning: false,
-    lunch: false,
-    evening: false
+  const [commuteMinutes, setCommuteMinutes] = useState(() => {
+    try {
+      const saved = localStorage.getItem('kmitl_commute_minutes');
+      return saved ? Number(saved) : 35;
+    } catch (e) {
+      return 35;
+    }
+  });
+
+  const [completedDailySlots, setCompletedDailySlots] = useState(() => {
+    try {
+      const saved = localStorage.getItem('kmitl_completed_slots');
+      return saved ? JSON.parse(saved) : { morning: false, lunch: false, evening: false };
+    } catch (e) {
+      return { morning: false, lunch: false, evening: false };
+    }
   });
 
   const toggleSlot = (key) => {
-    setCompletedDailySlots(prev => ({ ...prev, [key]: !prev[key] }));
+    setCompletedDailySlots(prev => {
+      const updated = { ...prev, [key]: !prev[key] };
+      try {
+        localStorage.setItem('kmitl_completed_slots', JSON.stringify(updated));
+      } catch (e) {}
+      return updated;
+    });
+  };
+
+  const handleCommuteMinutesChange = (mins) => {
+    setCommuteMinutes(mins);
+    try {
+      localStorage.setItem('kmitl_commute_minutes', String(mins));
+    } catch (e) {}
   };
 
   return (

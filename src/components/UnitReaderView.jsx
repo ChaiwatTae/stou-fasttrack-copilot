@@ -790,7 +790,7 @@ export default function UnitReaderView({
               background: '#0b1120',
               border: '1px solid rgba(255, 255, 255, 0.1)',
               borderRadius: '16px',
-              padding: '2.5rem',
+              padding: 'clamp(1rem, 3.5vw, 2.25rem)',
               boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
               minHeight: '480px',
               position: 'relative'
@@ -820,7 +820,9 @@ export default function UnitReaderView({
                   color: '#e2e8f0',
                   whiteSpace: 'pre-line',
                   fontFamily: '"Prompt", "Sarabun", sans-serif',
-                  letterSpacing: '0.01em'
+                  letterSpacing: '0.01em',
+                  wordBreak: 'break-word',
+                  overflowWrap: 'break-word'
                 }}>
                   {currentRawPageText}
                 </div>
