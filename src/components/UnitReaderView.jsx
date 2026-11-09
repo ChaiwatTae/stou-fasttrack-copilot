@@ -60,6 +60,7 @@ export default function UnitReaderView({
   useEffect(() => {
     let isMounted = true;
     setIsLoadingBook(true);
+    setSearchQuery('');
 
     const dataUrl = `./books_data/${course.code}_unit_${unit.id}.json`;
     fetch(dataUrl)
@@ -112,7 +113,7 @@ export default function UnitReaderView({
       const lines = pageText.split('\n').map(l => l.trim()).filter(Boolean);
 
       lines.forEach((line) => {
-        const topicMatch = line.match(/(เรื่องที่\s*\d+\.\d+\.\d+)\s*(.*)/);
+        const topicMatch = line.match(/(เรื่องที่\s*[๑-๙\d]+\.[๑-๙\d]+\.[๑-๙\d]+)\s*(.*)/);
         if (topicMatch) {
           if (currentTopic) lessons.push(currentTopic);
           currentTopic = {
@@ -300,6 +301,7 @@ export default function UnitReaderView({
       {/* 3 Prominent Reading Mode Tabs */}
       <div style={{
         display: 'flex',
+        flexWrap: 'wrap',
         gap: '0.5rem',
         marginBottom: '1.25rem',
         background: 'rgba(14, 20, 34, 0.9)',
@@ -311,7 +313,7 @@ export default function UnitReaderView({
         <button
           onClick={() => setViewMode('textbook')}
           style={{
-            flex: 1,
+            flex: '1 1 180px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -333,7 +335,7 @@ export default function UnitReaderView({
         <button
           onClick={() => setViewMode('rawPages')}
           style={{
-            flex: 1,
+            flex: '1 1 180px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -355,7 +357,7 @@ export default function UnitReaderView({
         <button
           onClick={() => setViewMode('summary')}
           style={{
-            flex: 1,
+            flex: '1 1 180px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',

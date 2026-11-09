@@ -104,7 +104,7 @@ export default function Navbar({
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           
           {/* Main View Tabs */}
-          <div style={{ display: 'flex', gap: '0.35rem' }}>
+          <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
             <button
               onClick={() => setActiveTab('units')}
               className={`btn ${activeTab === 'units' ? 'btn-primary' : 'btn-outline'}`}
