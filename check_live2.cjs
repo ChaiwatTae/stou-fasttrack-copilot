@@ -1,0 +1,10 @@
+const fs = require('fs');
+const content = fs.readFileSync('C:/Users/User/.gemini/antigravity/scratch/stou-fasttrack-app/live_verify.html');
+const text = content.toString('utf-8');
+console.log('File size:', content.length);
+console.log('Contains index-3Z9Q_tiR.js:', text.includes('index-3Z9Q_tiR.js'));
+console.log('Contains Scientia:', text.includes('Scientia'));
+console.log('Contains Empirical:', text.includes('Empirical'));
+console.log('Contains 1.1.1:', text.includes('1.1.1'));
+console.log('Contains rawPages button:', text.includes('rawPages') || text.includes('ดูหน้าหนังสือ'));
+console.log('Contains flipbook:', text.includes('flipbook'));

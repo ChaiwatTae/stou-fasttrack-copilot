@@ -412,6 +412,52 @@ export default function UnitReaderView({
           </a>
         </div>
 
+        {/* Prominent Keywords Bar (คำสำคัญที่ต้องจำให้แม่น) */}
+        {unit.keyTerms && unit.keyTerms.length > 0 && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.65rem',
+            flexWrap: 'wrap',
+            marginBottom: '1.75rem',
+            padding: '0.85rem 1.15rem',
+            background: 'linear-gradient(90deg, rgba(249, 115, 22, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%)',
+            border: '1px solid rgba(249, 115, 22, 0.3)',
+            borderRadius: '12px'
+          }}>
+            <span style={{
+              fontSize: '0.825rem',
+              fontWeight: 700,
+              color: '#fdba74',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              flexShrink: 0
+            }}>
+              <Key size={15} color="#f97316" /> คำสำคัญออกสอบประจำหน่วย (Keywords):
+            </span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
+              {unit.keyTerms.map((term, idx) => (
+                <span
+                  key={idx}
+                  style={{
+                    background: 'rgba(249, 115, 22, 0.16)',
+                    border: '1px solid rgba(249, 115, 22, 0.35)',
+                    color: '#ffedd5',
+                    padding: '0.25rem 0.65rem',
+                    borderRadius: '8px',
+                    fontSize: '0.8rem',
+                    fontWeight: 600,
+                    letterSpacing: '0.01em'
+                  }}
+                >
+                  #{term}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* ============================================================ */}
         {/* VIEW 1: FULL TEXTBOOK READING MODE (โหมดอ่านเนื้อหาเต็ม)       */}
         {/* ============================================================ */}
