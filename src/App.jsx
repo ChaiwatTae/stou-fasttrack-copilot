@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
+import MobileBottomNav from './components/MobileBottomNav';
 import DashboardView from './components/DashboardView';
 import UnitReaderView from './components/UnitReaderView';
 import QuizEngineView from './components/QuizEngineView';
@@ -174,6 +175,12 @@ export default function App() {
       <CommercialModal
         isOpen={isCommercialModalOpen}
         onClose={() => setIsCommercialModalOpen(false)}
+      />
+
+      {/* Mobile Bottom Navigation Bar (Thumb-Accessible for Commuters) */}
+      <MobileBottomNav
+        activeTab={activeTab}
+        onSelectTab={handleTabChange}
       />
 
     </div>

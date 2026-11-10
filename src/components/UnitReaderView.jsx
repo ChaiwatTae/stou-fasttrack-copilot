@@ -171,25 +171,25 @@ export default function UnitReaderView({
     : `http://readonline.ebookstou.org/`;
 
   return (
-    <div className="animate-fade-in" style={{ padding: '1.5rem 0 3.5rem' }}>
+    <div className="animate-fade-in" style={{ padding: '1rem 0 3.5rem' }}>
       
-      {/* Top Source Verification Alert */}
+      {/* Top Source Verification Alert (Compact on Mobile) */}
       <div style={{
-        background: 'linear-gradient(90deg, rgba(16, 185, 129, 0.12) 0%, rgba(15, 23, 42, 0.8) 100%)',
-        border: '1px solid rgba(16, 185, 129, 0.3)',
+        background: 'linear-gradient(90deg, rgba(16, 185, 129, 0.1) 0%, rgba(15, 23, 42, 0.8) 100%)',
+        border: '1px solid rgba(16, 185, 129, 0.25)',
         borderRadius: '12px',
-        padding: '0.85rem 1.25rem',
-        marginBottom: '1.25rem',
+        padding: '0.55rem 0.85rem',
+        marginBottom: '0.85rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '0.75rem'
+        gap: '0.5rem',
+        fontSize: '0.8rem'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <CheckCircle size={20} color="#10b981" />
-          <span style={{ fontSize: '0.875rem', color: '#e2e8f0' }}>
-            <strong style={{ color: '#34d399' }}>ข้อมูลรับรองจากตำรา มสธ. เล่มจริง:</strong> ชุดวิชา {course.code} หน่วยที่ {unit.id} {bookData?.totalPages ? `(ดาวน์โหลดครบทั้ง ${bookData.totalPages} หน้า)` : ''}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', overflow: 'hidden' }}>
+          <CheckCircle size={16} color="#10b981" style={{ flexShrink: 0 }} />
+          <span style={{ color: '#e2e8f0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <strong style={{ color: '#34d399' }}>ตำรา มสธ. เล่มจริง</strong> ({course.code} หน่วยที่ {unit.id}{bookData?.totalPages ? ` • ${bookData.totalPages} หน้า` : ''})
           </span>
         </div>
 
@@ -201,39 +201,43 @@ export default function UnitReaderView({
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '0.4rem',
-              fontSize: '0.775rem',
+              gap: '0.25rem',
+              fontSize: '0.75rem',
               color: '#60a5fa',
               textDecoration: 'none',
-              fontWeight: 600
+              fontWeight: 600,
+              whiteSpace: 'nowrap',
+              flexShrink: 0
             }}
           >
-            เปิดอ่านบน E-Book มสธ. หน้า {selectedPageNum} <ExternalLink size={13} />
+            <span>E-Book หน้า {selectedPageNum}</span> <ExternalLink size={12} />
           </a>
         )}
       </div>
 
-      {/* Navigation & Unit Selector Bar */}
+      {/* Navigation & Unit Selector Bar (Sleek Mobile First) */}
       <div style={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        gap: '1rem',
-        marginBottom: '1.25rem',
+        gap: '0.65rem',
+        marginBottom: '0.85rem',
         background: 'var(--bg-card)',
-        padding: '0.85rem 1.25rem',
+        padding: '0.65rem 0.85rem',
         borderRadius: '14px',
         border: '1px solid var(--border-color)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+        {/* Unit Dropdown & Stepper */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flex: '1 1 auto', minWidth: '220px' }}>
           <button 
             onClick={handlePrevUnit} 
             disabled={unit.id === 1}
             className="btn btn-outline"
-            style={{ padding: '0.4rem 0.65rem', opacity: unit.id === 1 ? 0.4 : 1 }}
+            style={{ padding: '0.35rem 0.55rem', opacity: unit.id === 1 ? 0.35 : 1 }}
+            aria-label="หน่วยก่อนหน้า"
           >
-            <ArrowLeft size={16} /> ก่อนหน้า
+            <ChevronLeft size={16} />
           </button>
           
           <select 
@@ -246,16 +250,21 @@ export default function UnitReaderView({
               background: '#0f172a',
               color: '#f8fafc',
               border: '1px solid var(--border-color)',
-              padding: '0.45rem 0.85rem',
+              padding: '0.4rem 0.65rem',
               borderRadius: '8px',
-              fontSize: '0.875rem',
+              fontSize: '0.825rem',
               fontWeight: 600,
-              cursor: 'pointer'
+              cursor: 'pointer',
+              flex: 1,
+              maxWidth: '100%',
+              textOverflow: 'ellipsis',
+              overflow: 'hidden',
+              whiteSpace: 'nowrap'
             }}
           >
             {course.units.map(u => (
               <option key={u.id} value={u.id}>
-                หน่วยที่ {u.id}: {u.title}
+                หน่วย {u.id}: {u.title}
               </option>
             ))}
           </select>
@@ -264,139 +273,100 @@ export default function UnitReaderView({
             onClick={handleNextUnit} 
             disabled={unit.id === course.units.length}
             className="btn btn-outline"
-            style={{ padding: '0.4rem 0.65rem', opacity: unit.id === course.units.length ? 0.4 : 1 }}
+            style={{ padding: '0.35rem 0.55rem', opacity: unit.id === course.units.length ? 0.35 : 1 }}
+            aria-label="หน่วยถัดไป"
           >
-            ถัดไป <ArrowRight size={16} />
+            <ChevronRight size={16} />
           </button>
         </div>
 
-        {/* Action Buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+        {/* Action Quick Chips */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
           <button
             onClick={() => onToggleUnitCompleted(unit.id)}
             className={`btn ${isDone ? 'btn-primary' : 'btn-outline'}`}
             style={{
-              padding: '0.45rem 0.9rem',
+              padding: '0.35rem 0.65rem',
+              fontSize: '0.78rem',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.45rem',
+              gap: '0.35rem',
               background: isDone ? 'linear-gradient(135deg, #059669, #10b981)' : undefined,
               borderColor: isDone ? '#10b981' : undefined
             }}
           >
-            <Check size={16} />
-            <span>{isDone ? 'อ่านจบแล้ว ✓' : 'ทำเครื่องหมายว่าจบ'}</span>
+            <Check size={14} />
+            <span>{isDone ? 'จบแล้ว ✓' : 'ทำจบ'}</span>
           </button>
 
           <button
             onClick={() => onStartQuizForUnit(unit.id)}
             className="btn btn-primary"
-            style={{ padding: '0.45rem 0.9rem', display: 'flex', alignItems: 'center', gap: '0.45rem' }}
+            style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
           >
-            <Sparkles size={14} color="#60a5fa" /> ทำควิซหน่วยนี้
+            <Sparkles size={13} color="#60a5fa" />
+            <span>ควิซ</span>
           </button>
         </div>
       </div>
 
-      {/* 3 Prominent Reading Mode Tabs */}
-      <div style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: '0.5rem',
-        marginBottom: '1.25rem',
-        background: 'rgba(14, 20, 34, 0.9)',
-        padding: '0.4rem',
-        borderRadius: '12px',
-        border: '1px solid var(--border-color)',
-        maxWidth: '720px'
-      }}>
+      {/* 3 Prominent Reading Mode Tabs (Segmented Control on All Screens) */}
+      <div className="segmented-control" style={{ marginBottom: '1rem' }}>
         <button
           onClick={() => setViewMode('textbook')}
+          className="segmented-btn"
           style={{
-            flex: '1 1 180px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.45rem',
-            padding: '0.65rem 0.85rem',
-            borderRadius: '9px',
-            border: 'none',
             background: viewMode === 'textbook' ? 'linear-gradient(135deg, #3b82f6, #2563eb)' : 'transparent',
             color: viewMode === 'textbook' ? '#ffffff' : 'var(--text-secondary)',
-            fontWeight: 700,
-            fontSize: '0.85rem',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease'
+            boxShadow: viewMode === 'textbook' ? '0 2px 8px rgba(59, 130, 246, 0.35)' : 'none'
           }}
         >
-          <BookOpen size={16} /> 1. อ่านบทเรียนเต็ม (Textbook)
+          <BookOpen size={15} />
+          <span>1. บทเรียน</span>
         </button>
 
         <button
           onClick={() => setViewMode('rawPages')}
+          className="segmented-btn"
           style={{
-            flex: '1 1 180px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.45rem',
-            padding: '0.65rem 0.85rem',
-            borderRadius: '9px',
-            border: 'none',
             background: viewMode === 'rawPages' ? 'linear-gradient(135deg, #10b981, #059669)' : 'transparent',
             color: viewMode === 'rawPages' ? '#ffffff' : 'var(--text-secondary)',
-            fontWeight: 700,
-            fontSize: '0.85rem',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease'
+            boxShadow: viewMode === 'rawPages' ? '0 2px 8px rgba(16, 185, 129, 0.35)' : 'none'
           }}
         >
-          <FileText size={16} /> 2. ดูหน้าหนังสือ มสธ. ต้นฉบับ
+          <FileText size={15} />
+          <span>2. เล่มจริง</span>
         </button>
 
         <button
           onClick={() => setViewMode('summary')}
+          className="segmented-btn"
           style={{
-            flex: '1 1 180px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.45rem',
-            padding: '0.65rem 0.85rem',
-            borderRadius: '9px',
-            border: 'none',
             background: viewMode === 'summary' ? 'linear-gradient(135deg, #f59e0b, #d97706)' : 'transparent',
             color: viewMode === 'summary' ? '#ffffff' : 'var(--text-secondary)',
-            fontWeight: 700,
-            fontSize: '0.85rem',
-            cursor: 'pointer',
-            transition: 'all 0.15s ease'
+            boxShadow: viewMode === 'summary' ? '0 2px 8px rgba(245, 158, 11, 0.35)' : 'none'
           }}
         >
-          <Flame size={16} /> 3. สรุปเข้ม 80/20 & จุดตาย
+          <Flame size={15} />
+          <span>3. สรุป 80/20</span>
         </button>
       </div>
 
-      {/* Main Content Card */}
-      <div className="card" style={{ padding: '2rem', marginBottom: '1.5rem' }}>
+      {/* Main Content Card (Responsive Padding) */}
+      <div className="card" style={{ padding: 'clamp(1rem, 3.5vw, 2rem)', marginBottom: '1.5rem' }}>
         
         {/* Unit Title Header */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap', borderBottom: '1px solid var(--border-color)', paddingBottom: '1.25rem', marginBottom: '1.75rem' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.4rem' }}>
-              <span className="badge badge-blue">
-                หน่วยที่ {unit.id} จาก 15 หน่วย
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.75rem', flexWrap: 'wrap', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.85rem', marginBottom: '1rem' }}>
+          <div style={{ flex: '1 1 240px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', marginBottom: '0.35rem', flexWrap: 'wrap' }}>
+              <span className="badge badge-blue" style={{ fontSize: '0.7rem', padding: '0.15rem 0.5rem' }}>
+                หน่วยที่ {unit.id} / 15
               </span>
-              <span className={`badge ${unit.importance === 'high' ? 'badge-rose' : 'badge-blue'}`}>
-                {unit.importance === 'high' ? '🔥 ข้อสอบออกบ่อยมาก' : 'ความสำคัญปานกลาง'}
+              <span className={`badge ${unit.importance === 'high' ? 'badge-rose' : 'badge-blue'}`} style={{ fontSize: '0.7rem', padding: '0.15rem 0.5rem' }}>
+                {unit.importance === 'high' ? '🔥 ออกสอบบ่อย' : 'ปานกลาง'}
               </span>
-              {unit.bookSource && (
-                <span className="badge badge-green" style={{ fontSize: '0.725rem' }}>
-                  {unit.bookSource}
-                </span>
-              )}
             </div>
-            <h1 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#f8fafc', lineHeight: 1.3 }}>
+            <h1 style={{ fontSize: 'clamp(1.15rem, 3.8vw, 1.55rem)', fontWeight: 800, color: '#f8fafc', lineHeight: 1.35 }}>
               {unit.title}
             </h1>
           </div>
@@ -406,51 +376,52 @@ export default function UnitReaderView({
             target="_blank"
             rel="noreferrer"
             className="btn btn-secondary"
-            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.55rem 1rem' }}
+            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 0.75rem', fontSize: '0.78rem' }}
           >
-            <Volume2 size={16} color="#ef4444" />
-            <span>ฟังคลิปเสียง มสธ.</span>
-            <ExternalLink size={13} color="var(--text-muted)" />
+            <Volume2 size={15} color="#ef4444" />
+            <span className="desktop-only">ฟังเสียง มสธ.</span>
+            <span className="mobile-only">เสียง</span>
+            <ExternalLink size={12} color="var(--text-muted)" />
           </a>
         </div>
 
-        {/* Prominent Keywords Bar (คำสำคัญที่ต้องจำให้แม่น) */}
+        {/* Horizontal Swipeable Keywords Bar */}
         {unit.keyTerms && unit.keyTerms.length > 0 && (
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '0.65rem',
-            flexWrap: 'wrap',
-            marginBottom: '1.75rem',
-            padding: '0.85rem 1.15rem',
-            background: 'linear-gradient(90deg, rgba(249, 115, 22, 0.12) 0%, rgba(15, 23, 42, 0.6) 100%)',
-            border: '1px solid rgba(249, 115, 22, 0.3)',
-            borderRadius: '12px'
+            gap: '0.5rem',
+            marginBottom: '1.25rem',
+            padding: '0.5rem 0.75rem',
+            background: 'linear-gradient(90deg, rgba(249, 115, 22, 0.1) 0%, rgba(15, 23, 42, 0.6) 100%)',
+            border: '1px solid rgba(249, 115, 22, 0.25)',
+            borderRadius: '10px'
           }}>
             <span style={{
-              fontSize: '0.825rem',
+              fontSize: '0.75rem',
               fontWeight: 700,
               color: '#fdba74',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.4rem',
+              gap: '0.3rem',
               flexShrink: 0
             }}>
-              <Key size={15} color="#f97316" /> คำสำคัญออกสอบประจำหน่วย (Keywords):
+              <Key size={13} color="#f97316" /> Keywords:
             </span>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem' }}>
+            <div className="keyword-scroll-container">
               {unit.keyTerms.map((term, idx) => (
                 <span
                   key={idx}
                   style={{
-                    background: 'rgba(249, 115, 22, 0.16)',
+                    background: 'rgba(249, 115, 22, 0.18)',
                     border: '1px solid rgba(249, 115, 22, 0.35)',
                     color: '#ffedd5',
-                    padding: '0.25rem 0.65rem',
-                    borderRadius: '8px',
-                    fontSize: '0.8rem',
+                    padding: '0.2rem 0.55rem',
+                    borderRadius: '6px',
+                    fontSize: '0.75rem',
                     fontWeight: 600,
-                    letterSpacing: '0.01em'
+                    letterSpacing: '0.01em',
+                    flexShrink: 0
                   }}
                 >
                   #{term}
@@ -649,26 +620,27 @@ export default function UnitReaderView({
               background: 'rgba(15, 23, 42, 0.8)',
               border: '1px solid var(--border-color)',
               borderRadius: '14px',
-              padding: '1rem 1.25rem',
+              padding: '0.65rem 0.85rem',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
               flexWrap: 'wrap',
-              gap: '1rem'
+              gap: '0.65rem'
             }}>
               {/* Page Number Controls */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                 <button
                   onClick={() => setSelectedPageNum(Math.max(1, selectedPageNum - 1))}
                   disabled={selectedPageNum <= 1}
                   className="btn btn-outline"
-                  style={{ padding: '0.4rem 0.75rem', opacity: selectedPageNum <= 1 ? 0.3 : 1 }}
+                  style={{ padding: '0.35rem 0.6rem', opacity: selectedPageNum <= 1 ? 0.3 : 1 }}
+                  aria-label="หน้าก่อนหน้า"
                 >
-                  <ChevronLeft size={16} /> หน้าก่อนหน้า
+                  <ChevronLeft size={16} /><span className="desktop-only"> ก่อนหน้า</span>
                 </button>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>หน้า</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>หน้า</span>
                   <select
                     value={selectedPageNum}
                     onChange={(e) => setSelectedPageNum(Number(e.target.value))}
@@ -676,9 +648,9 @@ export default function UnitReaderView({
                       background: '#020617',
                       color: '#f8fafc',
                       border: '1px solid var(--border-color)',
-                      padding: '0.35rem 0.6rem',
+                      padding: '0.3rem 0.5rem',
                       borderRadius: '8px',
-                      fontSize: '0.85rem',
+                      fontSize: '0.825rem',
                       fontWeight: 700
                     }}
                   >
@@ -688,8 +660,8 @@ export default function UnitReaderView({
                       </option>
                     ))}
                   </select>
-                  <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                    จาก {bookData?.totalPages || 78} หน้า
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
+                    /{bookData?.totalPages || 78}
                   </span>
                 </div>
 
@@ -697,54 +669,55 @@ export default function UnitReaderView({
                   onClick={() => setSelectedPageNum(Math.min(bookData?.totalPages || 78, selectedPageNum + 1))}
                   disabled={selectedPageNum >= (bookData?.totalPages || 78)}
                   className="btn btn-outline"
-                  style={{ padding: '0.4rem 0.75rem', opacity: selectedPageNum >= (bookData?.totalPages || 78) ? 0.3 : 1 }}
+                  style={{ padding: '0.35rem 0.6rem', opacity: selectedPageNum >= (bookData?.totalPages || 78) ? 0.3 : 1 }}
+                  aria-label="หน้าถัดไป"
                 >
-                  หน้าถัดไป <ChevronRight size={16} />
+                  <span className="desktop-only">ถัดไป </span><ChevronRight size={16} />
                 </button>
               </div>
 
               {/* Keyword Search inside Book */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: '1 1 240px', maxWidth: '340px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flex: '1 1 180px', maxWidth: '300px' }}>
                 <div style={{ position: 'relative', width: '100%' }}>
-                  <Search size={15} style={{ position: 'absolute', left: '10px', top: '10px', color: 'var(--text-muted)' }} />
+                  <Search size={14} style={{ position: 'absolute', left: '10px', top: '9px', color: 'var(--text-muted)' }} />
                   <input
                     type="text"
-                    placeholder="ค้นหาคำในหนังสือเล่มนี้..."
+                    placeholder="ค้นหาในเล่ม..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     style={{
                       width: '100%',
                       background: '#020617',
                       border: '1px solid var(--border-color)',
-                      padding: '0.45rem 0.85rem 0.45rem 2rem',
+                      padding: '0.35rem 0.75rem 0.35rem 1.85rem',
                       borderRadius: '8px',
                       color: '#f8fafc',
-                      fontSize: '0.825rem'
+                      fontSize: '0.8rem'
                     }}
                   />
                 </div>
               </div>
 
               {/* Font Size Adjuster */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
                 <button
                   onClick={() => setPageFontSize(Math.max(13, pageFontSize - 1))}
                   className="btn btn-outline"
-                  style={{ padding: '0.35rem 0.55rem', fontSize: '0.75rem' }}
+                  style={{ padding: '0.3rem 0.5rem', fontSize: '0.725rem' }}
                   title="ลดขนาดตัวอักษร"
                 >
-                  <ZoomOut size={14} /> A-
+                  <ZoomOut size={13} /> A-
                 </button>
-                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', minWidth: '32px', textAlign: 'center' }}>
+                <span style={{ fontSize: '0.725rem', color: 'var(--text-muted)', minWidth: '28px', textAlign: 'center' }}>
                   {pageFontSize}px
                 </span>
                 <button
                   onClick={() => setPageFontSize(Math.min(22, pageFontSize + 1))}
                   className="btn btn-outline"
-                  style={{ padding: '0.35rem 0.55rem', fontSize: '0.75rem' }}
+                  style={{ padding: '0.3rem 0.5rem', fontSize: '0.725rem' }}
                   title="เพิ่มขนาดตัวอักษร"
                 >
-                  <ZoomIn size={14} /> A+
+                  <ZoomIn size={13} /> A+
                 </button>
               </div>
             </div>

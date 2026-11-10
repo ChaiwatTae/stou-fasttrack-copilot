@@ -154,7 +154,7 @@ export default function DashboardView({
       {/* Hero Stats Row */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
         gap: '1.25rem',
         marginBottom: '2rem'
       }}>
@@ -330,7 +330,7 @@ export default function DashboardView({
       {/* 15 Units Grid */}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(360px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
         gap: '1rem'
       }}>
         {course.units.map((unit) => {

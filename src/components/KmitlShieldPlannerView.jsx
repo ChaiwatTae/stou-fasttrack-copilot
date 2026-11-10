@@ -56,8 +56,8 @@ export default function KmitlShieldPlannerView() {
         background: 'linear-gradient(135deg, rgba(234, 88, 12, 0.15) 0%, rgba(17, 23, 38, 0.95) 100%)',
         border: '1px solid rgba(249, 115, 22, 0.4)',
         borderRadius: '16px',
-        padding: '1.75rem',
-        marginBottom: '2rem'
+        padding: 'clamp(1rem, 3.5vw, 1.75rem)',
+        marginBottom: '1.5rem'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>

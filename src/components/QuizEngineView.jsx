@@ -94,20 +94,20 @@ export default function QuizEngineView({ course, targetUnitId = null, onSelectUn
   };
 
   return (
-    <div className="animate-fade-in" style={{ padding: '1.75rem 0 3.5rem', maxWidth: '860px', margin: '0 auto' }}>
+    <div className="animate-fade-in" style={{ padding: '1rem 0 3.5rem', maxWidth: '860px', margin: '0 auto' }}>
       
       {/* Quiz Top Control Bar & Unit Selector */}
       <div style={{
         background: 'var(--bg-card)',
         border: '1px solid var(--border-color)',
         borderRadius: '16px',
-        padding: '1rem 1.35rem',
-        marginBottom: '1.5rem',
+        padding: '0.85rem 1.15rem',
+        marginBottom: '1.25rem',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         flexWrap: 'wrap',
-        gap: '1rem'
+        gap: '0.75rem'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
           <div style={{
@@ -118,23 +118,24 @@ export default function QuizEngineView({ course, targetUnitId = null, onSelectUn
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            color: '#fff'
+            color: '#fff',
+            flexShrink: 0
           }}>
             <Brain size={20} />
           </div>
           <div>
-            <div style={{ fontSize: '0.95rem', fontWeight: 800, color: '#f8fafc' }}>
-              คลังข้อสอบจำลอง มสธ. ({course.code} {course.name})
+            <div style={{ fontSize: '0.925rem', fontWeight: 800, color: '#f8fafc' }}>
+              คลังข้อสอบจำลอง มสธ. ({course.code})
             </div>
-            <div style={{ fontSize: '0.775rem', color: 'var(--text-muted)' }}>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
               ข้อสอบคัดจากวัตถุประสงค์เชิงพฤติกรรมและจุดตายข้อสอบจริง
             </div>
           </div>
         </div>
 
         {/* Filter Dropdown */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Filter size={15} color="var(--text-muted)" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%', maxWidth: '320px' }}>
+          <Filter size={15} color="var(--text-muted)" style={{ flexShrink: 0 }} />
           <select
             value={selectedUnitFilter || ''}
             onChange={(e) => handleFilterChange(e.target.value)}
@@ -142,11 +143,12 @@ export default function QuizEngineView({ course, targetUnitId = null, onSelectUn
               background: '#020617',
               color: '#f8fafc',
               border: '1px solid var(--border-color)',
-              padding: '0.45rem 0.85rem',
+              padding: '0.4rem 0.75rem',
               borderRadius: '8px',
               fontSize: '0.825rem',
               fontWeight: 600,
-              cursor: 'pointer'
+              cursor: 'pointer',
+              width: '100%'
             }}
           >
             <option value="">🎯 ข้อสอบรวมทุกหน่วย ({allQuestions.length} ข้อ)</option>
@@ -235,7 +237,7 @@ export default function QuizEngineView({ course, targetUnitId = null, onSelectUn
         </div>
       ) : (
         /* Active Question View */
-        <div className="card" style={{ padding: '2rem', margin: '1.5rem 0' }}>
+        <div className="card" style={{ padding: 'clamp(1rem, 3.5vw, 1.75rem)', margin: '1.25rem 0' }}>
           
           {/* Progress Header */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', flexWrap: 'wrap', gap: '0.5rem' }}>
