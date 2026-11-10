@@ -213,23 +213,57 @@ body {
 }
 
 /* ============================================================ */
-/* MOBILE BOTTOM NAVIGATION & MOBILE-FIRST UX                   */
+/* MOBILE BOTTOM NAVIGATION & MOBILE-FIRST UX (DEFAULT = MOBILE) */
 /* ============================================================ */
 
 .mobile-bottom-nav {
-  display: none;
+  display: block !important;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 999;
-  background: rgba(11, 16, 28, 0.94);
+  background: rgba(11, 16, 28, 0.95);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-top: 1px solid var(--border-color);
   padding: 0.35rem 0.5rem;
   padding-bottom: max(0.45rem, env(safe-area-inset-bottom, 0.45rem));
   box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.desktop-only {
+  display: none !important;
+}
+
+.mobile-only {
+  display: flex !important;
+}
+
+body {
+  padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+}
+
+.container {
+  padding: 0 0.85rem !important;
+}
+
+.card {
+  border-radius: 14px !important;
+  padding: 1rem !important;
+}
+
+h1 {
+  font-size: 1.35rem !important;
+}
+
+h2 {
+  font-size: 1.15rem !important;
+}
+
+.btn {
+  padding: 0.55rem 0.9rem !important;
+  font-size: 0.825rem !important;
 }
 
 .mobile-bottom-nav-inner {
@@ -352,49 +386,43 @@ body {
   font-family: var(--font-thai);
 }
 
-/* Responsive Breakpoints */
-@media (max-width: 768px) {
+/* DESKTOP MEDIA QUERY (Only applied when screen width >= 769px) */
+@media screen and (min-width: 769px) {
   .mobile-bottom-nav {
-    display: block !important;
+    display: none !important;
   }
   
   .desktop-only {
-    display: none !important;
+    display: flex !important;
   }
   
   .mobile-only {
-    display: flex !important;
+    display: none !important;
   }
 
   body {
-    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: 0 !important;
   }
 
   .container {
-    padding: 0 0.85rem !important;
+    padding: 0 1.25rem !important;
   }
 
   .card {
-    border-radius: 14px !important;
-    padding: 1.15rem !important;
+    border-radius: 16px !important;
+    padding: 2rem !important;
   }
 
   h1 {
-    font-size: 1.35rem !important;
+    font-size: 1.6rem !important;
   }
 
   h2 {
-    font-size: 1.15rem !important;
+    font-size: 1.25rem !important;
   }
 
   .btn {
-    padding: 0.55rem 0.9rem !important;
-    font-size: 0.825rem !important;
-  }
-}
-
-@media (min-width: 769px) {
-  .mobile-only {
-    display: none !important;
+    padding: 0.65rem 1.25rem !important;
+    font-size: 0.875rem !important;
   }
 }

@@ -150,6 +150,7 @@ export default function App() {
         borderTop: '1px solid var(--border-color)', 
         background: '#070a12', 
         padding: '1.5rem 0',
+        paddingBottom: 'calc(1.5rem + 70px)',
         marginTop: 'auto'
       }}>
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', fontSize: '0.8rem', color: 'var(--text-muted)' }}>

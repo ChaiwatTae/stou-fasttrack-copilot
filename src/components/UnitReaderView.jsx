@@ -23,6 +23,7 @@ import {
   ZoomOut
 } from 'lucide-react';
 import { UNIT_READING_CONTENT } from '../data/unitReadingContent';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export default function UnitReaderView({ 
   course, 
@@ -32,6 +33,7 @@ export default function UnitReaderView({
   completedUnits, 
   onToggleUnitCompleted 
 }) {
+  const isMobile = useIsMobile();
   const unit = course.units.find(u => u.id === currentUnitId) || course.units[0];
   const isDone = completedUnits.includes(unit.id);
 
@@ -218,23 +220,23 @@ export default function UnitReaderView({
       {/* Navigation & Unit Selector Bar (Sleek Mobile First) */}
       <div style={{
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        gap: '0.65rem',
+        flexDirection: 'column',
+        gap: '0.45rem',
         marginBottom: '0.85rem',
         background: 'var(--bg-card)',
-        padding: '0.65rem 0.85rem',
+        padding: isMobile ? '0.55rem 0.65rem' : '0.85rem 1.25rem',
         borderRadius: '14px',
-        border: '1px solid var(--border-color)'
+        border: '1px solid var(--border-color)',
+        width: '100%',
+        boxSizing: 'border-box'
       }}>
-        {/* Unit Dropdown & Stepper */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flex: '1 1 auto', minWidth: '220px' }}>
+        {/* Row 1: Unit Stepper & Selector */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', width: '100%' }}>
           <button 
             onClick={handlePrevUnit} 
             disabled={unit.id === 1}
             className="btn btn-outline"
-            style={{ padding: '0.35rem 0.55rem', opacity: unit.id === 1 ? 0.35 : 1 }}
+            style={{ padding: '0.35rem 0.55rem', opacity: unit.id === 1 ? 0.35 : 1, flexShrink: 0 }}
             aria-label="หน่วยก่อนหน้า"
           >
             <ChevronLeft size={16} />
@@ -250,12 +252,13 @@ export default function UnitReaderView({
               background: '#0f172a',
               color: '#f8fafc',
               border: '1px solid var(--border-color)',
-              padding: '0.4rem 0.65rem',
+              padding: '0.4rem 0.55rem',
               borderRadius: '8px',
-              fontSize: '0.825rem',
+              fontSize: isMobile ? '0.8rem' : '0.875rem',
               fontWeight: 600,
               cursor: 'pointer',
               flex: 1,
+              minWidth: 0,
               maxWidth: '100%',
               textOverflow: 'ellipsis',
               overflow: 'hidden',
@@ -273,39 +276,49 @@ export default function UnitReaderView({
             onClick={handleNextUnit} 
             disabled={unit.id === course.units.length}
             className="btn btn-outline"
-            style={{ padding: '0.35rem 0.55rem', opacity: unit.id === course.units.length ? 0.35 : 1 }}
+            style={{ padding: '0.35rem 0.55rem', opacity: unit.id === course.units.length ? 0.35 : 1, flexShrink: 0 }}
             aria-label="หน่วยถัดไป"
           >
             <ChevronRight size={16} />
           </button>
         </div>
 
-        {/* Action Quick Chips */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+        {/* Row 2: Action Buttons (Thumb-friendly touch targets) */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', width: '100%' }}>
           <button
             onClick={() => onToggleUnitCompleted(unit.id)}
             className={`btn ${isDone ? 'btn-primary' : 'btn-outline'}`}
             style={{
-              padding: '0.35rem 0.65rem',
+              flex: 1,
+              padding: '0.45rem 0.65rem',
               fontSize: '0.78rem',
               display: 'flex',
               alignItems: 'center',
+              justifyContent: 'center',
               gap: '0.35rem',
               background: isDone ? 'linear-gradient(135deg, #059669, #10b981)' : undefined,
               borderColor: isDone ? '#10b981' : undefined
             }}
           >
             <Check size={14} />
-            <span>{isDone ? 'จบแล้ว ✓' : 'ทำจบ'}</span>
+            <span>{isDone ? 'อ่านจบแล้ว ✓' : 'ทำเครื่องหมายว่าจบ'}</span>
           </button>
 
           <button
             onClick={() => onStartQuizForUnit(unit.id)}
             className="btn btn-primary"
-            style={{ padding: '0.35rem 0.75rem', fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+            style={{ 
+              flex: 1,
+              padding: '0.45rem 0.75rem', 
+              fontSize: '0.78rem', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center', 
+              gap: '0.35rem' 
+            }}
           >
             <Sparkles size={13} color="#60a5fa" />
-            <span>ควิซ</span>
+            <span>ทำควิซหน่วยนี้</span>
           </button>
         </div>
       </div>
@@ -353,7 +366,7 @@ export default function UnitReaderView({
       </div>
 
       {/* Main Content Card (Responsive Padding) */}
-      <div className="card" style={{ padding: 'clamp(1rem, 3.5vw, 2rem)', marginBottom: '1.5rem' }}>
+      <div className="card" style={{ padding: isMobile ? '0.75rem 0.85rem' : '2rem', marginBottom: '1.5rem' }}>
         
         {/* Unit Title Header */}
         <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '0.75rem', flexWrap: 'wrap', borderBottom: '1px solid var(--border-color)', paddingBottom: '0.85rem', marginBottom: '1rem' }}>
